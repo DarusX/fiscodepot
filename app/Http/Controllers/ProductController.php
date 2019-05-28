@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Product;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -28,6 +30,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view('products.create');
     }
 
     /**
@@ -39,6 +42,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'product' => 'required',
+            'description' => 'required',
+            'price' => 'required'
+        ]);
+        //Auth::user()->products()->create($request->all());
+        Product::create($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
@@ -50,6 +61,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+        return view('products.show')->with([
+            'product' => $product
+            ]);
     }
 
     /**
@@ -61,6 +75,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
+        return view('products.edit')->with([
+            'product' => $product
+            ]);
     }
 
     /**
@@ -73,6 +90,13 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        $this->validate($request, [
+            'product' => 'required'
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('products.index');
     }
 
     /**

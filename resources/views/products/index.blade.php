@@ -9,7 +9,8 @@
                     <td class="py-2">{{$product->product}}</td>
                     <td class="py-2">{{$product->price}}</td>
                     <td class="py-2">
-                        <a href="http://" class="btn btn-sm btn-dark">Edit</a>
+                        <a href="{{ route('products.show', $product) }}" class="btn btn-sm btn-dark">Ver</a>
+                        <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-dark">Edit</a>
                     </td>
                 </tr>
                 @endforeach
